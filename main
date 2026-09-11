@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Newsletter Échiquier</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Times New Roman", serif;
+      background: #e6e6e6;
+    }
+
+    .navbar {
+      background: #0b1c5c;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .nav-btn {
+      background: #1c2f8a;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      margin: 0 5px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .nav-btn.active {
+      background: #f2c94c;
+      color: black;
+    }
+
+    .page {
+      display: none;
+      width: 1100px;
+      min-height: 750px; 
+      margin: 20px auto;
+      background: white;
+      padding: 40px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: visible; 
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .title {
+      text-align: center;
+      color: #1c2f8a;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 32px;
+    }
+
+    .title p {
+      margin-top: 5px;
+      color: gray;
+    }
+
+    hr {
+      border: none;
+      border-top: 2px solid #1c2f8a;
+      margin: 10px 0 10px;
+    }
+
+    .subtitle {
+      text-align: left;
+      color: #1c2f8a;
+    }
+
+    .subtitle h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    h2 {
+      color: #1c2f8a;
+      border-bottom: 2px solid #1c2f8a;
+      padding-bottom: 5px;
+      margin-top: 0;
+    }
+
+    p {
+      line-height: 1.6;
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    strong {
+      color: #1c2f8a;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: gray;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    /* ✅ PAGE 7 HORIZONTALE */
+    .page-7 .content {
+      display: block;
+    }
+
+    .page-7 .content > div {
+      width: 100%;
+      margin-bottom: 40px;
+    }
+
+    /* PAGE 2 - Optimisation */
+.page-2 .content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.page-2 .content-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 30px;
+  align-items: flex-start;
+}
+
+.page-2 .content-section h2 {
+  grid-column: 1 / -1;
+  margin-bottom: 15px;
+}
+
+.page-2 .section-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.page-2 .section-column h3 {
+  color: #1c2f8a;
+  font-size: 18px;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+}
+
+.page-2 .section-column p,
+.page-2 .section-column ul,
+.page-2 .section-column li {
+  margin: 8px 0;
+  line-height: 1.5;
+}
+
+.page-2 .section-column ul {
+  padding-left: 20px;
+  list-style-position: inside;
+}
+
+.page-2 .section-column li {
+  margin: 5px 0;
+}
+
+/* Duels mémorables - Centré */
+.page-2 .content-section-full {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.page-2 .section-column-center {
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  text-align: center;
+}
+
+.page-2 .section-column-center h3 {
+  color: #1c2f8a;
+  font-size: 18px;
+  margin: 0 0 15px 0;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 8px;
+  text-align: center;
+}
+
+.page-2 .section-column-center p {
+  margin: 8px 0;
+  line-height: 1.5;
+  text-align: center;
+}
+  
+    /* ÉCRAN LOGIN */
+    #login-screen {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0b1c5c, #000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .login-box {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .login-box input {
+      padding: 10px;
+      margin: 10px 0;
+      width: 200px;
+    }
+
+    .login-box button {
+      padding: 10px 15px;
+      background: #1c2f8a;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #error {
+      color: red;
+      font-size: 14px;
+    }
+
+    /* ÉCRAN LOADING */
+    #loading-screen {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #0b1c5c, #000);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 998;
+    }
+
+    .loader-box {
+      text-align: center;
+    }
+
+    /* ♟️ Animation */
+    .chess-piece {
+  display: inline-block;
+  font-size: 80px;
+  animation: rotation-pion 2s linear infinite;
+}
+
+@keyframes rotation-pion {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+    /* Barre */
+    .progress-bar {
+      width: 300px;
+      height: 20px;
+      background: #1c2f8a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    #progress {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #f2c94c, #ffd700);
+      box-shadow: 0 0 10px #f2c94c;
+    }
+
+
+
+
+    .interclubs-buttons {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.btn {
+    display: inline-block;
+    margin: 8px;
+    padding: 14px 26px;
+    font-size: 17px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    color: white;
+    transition: 0.2s ease;
+}
+
+.btn-blue {
+    background-color: #0d6efd;
+}
+
+.btn-blue:hover {
+    background-color: #0b5ed7;
+}
+
+.btn-green {
+    background-color: #198754;
+}
+
+.btn-green:hover {
+    background-color: #157347;
+}
+  
+  </style>
+</head>
+<body>
+
+<div class="navbar">
+  <button class="nav-btn active" onclick="showPage(1)">Page 1</button>
+  <button class="nav-btn" onclick="showPage(2)">Page 2</button>
+  <button class="nav-btn" onclick="showPage(3)">Page 3</button>
+  <button class="nav-btn" onclick="showPage(4)">Page 4</button>
+  <button class="nav-btn" onclick="showPage(5)">Page 5</button>
+  <button class="nav-btn" onclick="showPage(6)">Page 6</button>
+  <button class="nav-btn" onclick="showPage(7)">Page 7</button>
+  <button class="nav-btn" onclick="showPage(8)">Page 8</button>
+</div>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <h2>♟️ Accès à la Newsletter</h2>
+    <input type="password" id="password" placeholder="Mot de passe...">
+    <button onclick="checkPassword()">Entrer</button>
+    <p id="error"></p>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div id="loading-screen">
+  <div class="loader-box">
+    <div class="chess-piece">♟️</div>
+    <p>Chargement...</p>
+    <div class="progress-bar">
+      <div id="progress"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 1 -->
+<div class="page active" id="page1">
+  <div class="title">
+    <h1>♟️ Newsletter de l'Échiquier Tournaisien</h1>
+    <p>Juin + Juillet 2026</p>
+  </div>
+
+  <hr>
+
+  <div class="content">
+    <div>
+  <p>Bonjour à tous,</p>
+
+<p>
+  Bienvenue dans la <strong>cinquieme édition de la newsletter de l'Échiquier Tournaisien</strong> ♟️
+</p>
+
+<p>
+  Dans cette édition, vous retrouverez toutes les informations concernant le club et ses membres pour les mois d'<strong>août</strong> et <strong>septembre</strong>.
+</p>
+
+<p><strong>📌 Voici les différentes catégories :</strong></p>
+
+<ul>
+  <li>Le calendrier du club</li>
+  <li>Les Interclubs</li>
+  <li>Le classement final de l'Open d'été</li>
+  <li>Le classement PITCH</li>
+  <li>La Coupe et son inscription</li>
+  <li><strong>Le règlement de la Coupe</strong></li>
+  <li>Les épreuves du Zodiac</li>
+  <li>Les classements pour le Blitz et le Mölkky du club</li>
+</ul>
+
+<p>
+  Cette édition contiendra tout ce que vous devez savoir sur les Interclubs et les compétitions internes du club, ainsi qu'un récapitulatif concernant notre week-end réussi à Chercq.
+</p>
+
+<p>
+  Commençons tout d'abord par le calendrier !
+</p>
+
+<p>
+  Si vous remarquez des incohérences ou des éléments à améliorer, n'hésitez pas à me le faire savoir, comme toujours.
+</p>
+
+<p>
+  Sur ce, je vous souhaite une excellente lecture à tous !
+</p>
+
+</div>
+<div>
+<h2>Le calendrier</h2>
+
+<p>Voici le calendrier pour le reste de l'année 2026 :</p>
+
+<p>
+  <strong>⚠️ Attention :</strong> ce calendrier est susceptible d'être modifié si le local n'est pas disponible à l'une des dates prévues.
+</p>
+
+<p>
+  <strong>Nouveauté : le calendrier est désormais disponible sur la page Facebook de l'Échiquier Tournaisien.</strong>
+</p>
+
+<ul>
+        <Li>18/09 -> <strong>Zodiaque</strong> : blitz vierge (<strong>Extinction</strong>) +<strong>Tirage de la coupe</strong></Li>
+        <Li>25/09 -> <strong>La Coupe tournaisienne</strong> : seizième de finale + Open d'Automne R1</Li>
+        <Li>27/09 -> <strong>INTERCLUBS</strong> RONDE 1</Li>
+        <Li>02/10 -> <strong>La Coupe tournaisienne</strong> : huitième de finale + Open d'Automne R2</Li>
+        <Li>09/10 -> <strong>Zodiaque</strong> : blitz balance (<strong>Tirage-ouverture</strong>)</Li>
+        <Li>11/10 -> <strong>INTERCLUBS</strong> RONDE 2</Li>
+        <Li>16/10 -> <strong>La Coupe tournaisienne</strong> : huitième de finale + Open d'Automne R3</Li>
+        <Li>23/10 -> <strong>La Coupe tournaisienne</strong> : quart de finale + Open d'Automne R4</Li>
+        <Li>30/10 -> "CLUB FERME"</Li>
+        <Li>06/11 -> <strong>La Coupe tournaisienne</strong> : quart de finale + Open d'Automne R5</Li>
+        <Li>13/11 -> <strong>Zodiaque</strong> : blitz scorpion (<strong>Handicap-pions</strong>)</Li>
+        <Li>15/11 -> <strong>INTERCLUBS</strong> RONDE 3</Li>
+        <Li>20/11 -> <strong>La Coupe tournaisienne</strong> : demi-finale + Open d'Automne R6</Li>
+        <Li>27/11 -> <strong>La Coupe tournaisienne</strong> : demi-finale + Open d'Automne R7</Li>
+        <Li>29/11 -> <strong>INTERCLUBS</strong> RONDE 4</Li>
+        <Li>04/12 -> <strong>Zodiaque</strong> : blitz balance de M.Robinson (<strong>Blitz Normal</strong>)</Li>
+        <Li>11/12 -> <strong>La Coupe tournaisienne : LA FINALE ! (1/2)</strong> + Open d'Automne R8 </Li>
+        <Li>18/12 -> <strong>La Coupe tournaisienne : LA FINALE ! (2/2)</strong> + Open d'Automne R9</Li>
+        <Li>20/12 -> <strong>INTERCLUBS</strong> RONDE 5</li>
+        <Li>25/12 -> "CLUB FERME" (C'est Noel)</Li>
+      </ul>
+
+</div>
+</div>
+  <div class="footer">
+    <span>écrit par Liam P.</span>
+    <span>1</span>
+  </div>
+</div>
+
+
+<!-- PAGE 2 -->
+<div class="page page-2" id="page2">
+  <div class="title">
+    <h1>♟️ Newsletter de l'Échiquier Tournaisien</h1>
+    <p>Aout + Septembre 2026</p>
+  </div>
+
+  <hr>
+
+  <div class="subtitle">
+        <h1>Les Interclubs</h1>
+   </div>     
+     
+  <hr> 
+          
+  <div class="content">  
+  <div>
+<p><strong>CECI EST UNE COPIE DE LA DERNIÈRE NEWSLETTER. N'EN TENEZ PAS COMPTE SI VOUS L'AVEZ DÉJÀ LUE OU SI VOUS AVEZ DÉJÀ RÉPONDU AUX LIENS. MERCI.</strong></p>
+
+ <p>Les interclubs approchent a grands pas, et nous aurons besoin de vous pour aider l'Echiquier Tournaisien a atteindre ses objectifs cette saison !</p>
+
+<p>La saison derniere a ete plus difficile que prevu, mais nous avons tire des enseignements de nos erreurs. Voici tout ce qu'il faut savoir avant le debut de cette nouvelle campagne.</p>
+
+<p>Les interclubs comptent desormais 6 divisions. Une nouvelle division a egalement fait son apparition, avec une moyenne Elo maximale de 1700. Dans cette division, il sera possible d'ajouter de nouveaux joueurs a la liste de forces en cours de saison.</p>
+
+<p><strong>Attention :</strong> pour pouvoir participer aux interclubs, vous devez etre inscrit au club au plus tard le <strong>10 septembre</strong>.</p>
+
+<p>Apres les nombreuses amendes recues la saison derniere, le comite a decide d'aligner seulement deux equipes cette annee afin de mieux gerer les effectifs.</p>
+
+<p>Notre premiere equipe evoluera en division 3, tandis que la seconde jouera en division 5. Nos objectifs sont clairs : maintenir notre equipe en division 3, obtenir la montee en division 4 avec la seconde equipe, conserver un effectif aussi stable que possible tout au long de la saison afin de renforcer l'esprit d'equipe et, bien entendu, eviter les amendes.</p>
+    </div> 
+    <div>
+<p>Cette saison, c'est moi (Liam) qui serai en charge de la gestion des equipes et qui vous contacterai afin de connaitre vos disponibilites.</p>
+
+<p>Pour cette nouvelle saison, nous avons choisi de gerer les disponibilites directement via cette newsletter. Cette methode devrait permettre de centraliser plus facilement les reponses et de simplifier l'organisation des equipes.</p>
+
+<p>Vous trouverez deux boutons en bas de cette page :</p>
+
+<ul>
+<li>Le premier vous permettra d'indiquer votre nom, votre prenom et de confirmer si vous souhaitez participer aux interclubs cette saison.</li>
+<li>Le second vous permettra de communiquer vos disponibilites pour chacune des manches a venir.</li>
+</ul>
+
+<p>Meme si vous ne souhaitez pas participer aux interclubs, merci de nous le signaler. Cela nous permettra de ne pas vous solliciter inutilement par la suite.</p>
+
+<p>Le calendrier des cinq premieres manches est disponible en premiere page de cette newsletter. N'hesitez pas a m'indiquer des maintenant vos disponibilites pour chacune d'entre elles. Cela facilitera grandement l'organisation des equipes.</p>
+
+<p>J'espere que cette nouvelle saison d'interclubs sera une reussite pour notre club et qu'elle marquera le debut d'une belle dynamique pour les annees a venir.</p>
+
+<p>Merci a toutes et a tous pour votre engagement.</p>
+
+</div>
+</div>
+
+<div class="interclubs-buttons">
+    <a href="https://1drv.ms/x/c/e76e2fd623cf1dcb/IQAV3WidmhpZQqYD52QS1lzQAdDpdRyfL2J9vXnd7vha68k?e=CpAEze&nav=MTVfezAwMDAwMDAwLTAwMDEtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMH0" class="btn btn-blue">
+        ✅ Je participe aux interclubs
+    </a>
+
+    <a href="https://1drv.ms/x/c/e76e2fd623cf1dcb/IQAV3WidmhpZQqYD52QS1lzQAdDpdRyfL2J9vXnd7vha68k?e=I8uCcL&nav=MTVfezAwMDAwMDAwLTAwMDEtMDAwMC0wMTAwLTAwMDAwMDAwMDAwMH0" class="btn btn-green">
+        📅 Indiquer mes disponibilités
+    </a>
+      </div>
+    </div>
+
+  <div class="footer">
+    <span>écrit par Liam P.</span>
+    <span>2</span>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page page-7" id="page3">
+  <div class="title">
+    <h1>♟️ Newsletter de l'Échiquier Tournaisien</h1>
+    <p>Aout + Septembre 2026</p>
+  </div>
+
+  <hr>
+
+  <div class="subtitle">
+        <h1>Le classement final de l'Open d'été</h1>
+   </div>     
+     
+  <hr> 
+          
+  <div class="content">  
+    <div> 
+        <p>L'Open d'été a touché à sa fin lors de ce mois d'août. Au début du mois, il ne restait plus que 3 champions possibles : Liam, Michel et Jonathan.</p>
+
+        <p>Celui-ci a été remporté par Jonathan après une victoire solide face à Jean-Pol et un match nul face à Julien. Presque un parfait 7/7 !</p>
+
+        <p>On peut egalement noter une performance solide d'Arthur Ronsyn, Esteban Hardenne et Theo Coens.</p>
+        
+        <p>Petit rappel que l'Open d'été reviendra à sa formule antérieure de parties rapides l'an prochain.</p>
+
+        <p>Merci beaucoup au 26 participants qui sont venus jouer lors de cet été et encore félicitations à Jonathan !</p> 
+    </div>
+</div>
+
+   <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; margin-top: 30px;">
+    <div style="flex:1; text-align:center;">
+      <img src="C:\Users\Liam\OneDrive\Images\Screenshots\Screenshot 2026-09-07 145443.png"
+           style="width:100%; max-width:450px; height:600px; border-radius:4px;">
+    </div>
+  </div>
+  <div class="footer">
+    <span>écrit par Liam P.</span>
+    <span>3</span>
+  </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="page4">
+  <div class="title">
+    <h1>♟️ Newsletter de l'Échiquier Tournaisien</h1>
+    <p>Aout + Septembre 2026</p>
+  </div>
+
+  <hr>
+
+  <div class="subtitle">
+        <h1>📊 Classement PITCH</h1>
+   </div>     
+     
+  <hr> 
+          
+     <div class="content">  
+     <div>
+<p>
+        Petit rappel que le classement PITCH est une nouveauté cette année. 
+        Il s'agit d'un système de points basé sur vos performances qui, à la fin de l'année, 
+        déterminera dans quel championnat vous évoluerez en 2027.
+       </p>
+       <P><strong>Le premier du classement PITCH à la fin du mois de décembre remportera un trophée intitulé « Meilleur joueur de l’Échiquier tournaisien 2026 ». Plus que 6 joueurs sont en competitions pour ce trophée !</strong></P>
+       <p>
+        <strong>Le classement PITCH à la fin du mois d'août déterminera dans quel pot vous serez pour le 
+        tirage au sort de la coupe.</strong>
+      </p>
+      <p>
+        <strong>Attention également : seul le top 32 en août sera prioritaire pour participer à la coupe !</strong>
+      </p>
+      <p>
+        <strong>Pour le tirage de la coupe, lors de la 1re manche, les joueurs des pots 1 et 2 affronteront 
+        un adversaire des pots 3 ou 4, ce qui donne une raison supplémentaire d'être dans le top 16 
+        après l'Open d'été !</strong>
+      </p>
+      <p>
+        On ne peut pas affronter quelqu'un de son propre pot avant les quarts de finale.
+      </p>
+     <p>
+    Voici le top 32 du classement PITCH après l’Open d’été.
+     </p>
+    <p>Le 12e du classement PITCH a une pénalité de 5 points.</p>
+    
+<p>Ce classement comporte actuellement deux compétitions complètes et une compétition non commencée. Si vous ne voyez pas votre nom, n’abandonnez pas.</p>
+
+<p>La Coupe et l'Open d’automne peuvent être votre chance de gagner énormément de points.</p>
+
+<p><strong>Les joueurs ayant changé de club, n'ayant pas payé leurs cotisations pour l'année 26-27 ou ayant choisi de ne plus participer ne figurent pas dans ce classement.</strong></p>
+
+<p>Si vous avez des questions sur ce nouveau classement, n’hésitez pas à me les poser en personne ou via l’adresse mail du club.</p>
+    </div>
+<div>
+<p><strong>🏅 Classement PITCH le 1er Septembre</strong></p>
+<h3>CHAMPIONNAT A 2027</h3>
+<ul>
+  <li><strong>1. Drossart J. 300 pts (2 eme A + 1er ETE)</strong></li> -> Mathématiquement qualifié
+  <li><strong>2. Pitcher L. 245 pts (3 eme A + 2 eme ETE)</strong></li> -> Mathématiquement qualifié
+  <li><strong>3. Canel M. 207 pts (4 eme A + 3 eme ETE)</strong></li>
+  <li><strong>4. Jouvel F. 200 pts (1er A)</strong></li>
+  <li><strong>5. Skowron JP. 160 pts (7 eme A + 4 eme ETE)</strong></li>
+  <li><strong>6. Vanneste D. 143 pts (1er B + 21 eme ETE)</strong></li>
+  <li><strong>7. Hardenne E. 136 pts (3 eme B + 7 eme ETE)</strong></li>
+  <li><strong>8. Trenteseaux M. 125 pts (2 eme B + 16 eme ETE)</strong></li>
+</ul>
+<h3>CHAMPIONNAT B 2027</h3>
+<ul>
+  <li><strong>9. Coens T. 99 pts (2 eme C et 8 eme ETE)</strong></li>
+  <li><strong>10. Taquet G. 97 pts (8 eme A + 20 eme ETE)</strong></li>
+  <li><strong>11. Minet J. 94 pts (7 eme C + 5 eme ETE)</strong></li>
+  <li><strong>12. Bargibant D. 90 pts (5 eme B + 13 eme ETE)</strong></li>
+  <li><strong>13. Ronsyn A. 89 pts (6 eme C + 6 eme ETE)</strong></li>
+  <li><strong>14. Chajia G. 88 pts (1er C + 17 eme ETE)</strong></li>
+  <li><strong>15. Tounkara P. 87 pts (3 eme C + 9 eme ETE)</strong></li>
+  <li><strong>16. Barcak G. 75 pts (6 eme C + 22 eme ETE)</strong></li>
+  </ul>
+  <h3>Open Hivernale | Championnat C 2027</h3>
+  <ul>
+  <li><strong>17. Lienart L. 69 pts (4 eme B)</strong></li>
+  <li><strong>18. Renault L. 69 pts (8 eme B + 19 eme ETE)</strong></li>
+  <li><strong>19. Huys V. 62 pts(9 eme C + 11 eme ETE)</strong></li>
+  <li><strong>20. Marcy M. 61 pts (4 eme C + 18 eme ETE)</strong></li>
+  <li><strong>21. Delsalle D. 57 pts (17 eme C + 10 eme ETE)</strong></li>
+  <li><strong>22. Tkindt V. 55 pts (12 eme C + 12 eme ETE)</strong></li>
+  <li><strong>23. Penninckx L. 48 pts (13 eme C + 15 eme ETE)</strong></li>
+  <li><strong>24. Dorchain N. 35 pts (20 eme C + 23 eme ETE)</strong></li>
+  <li><strong>25. Van Coppenolle G. 0 pts </strong></li>
+  <li><strong>26. Renault S. 0 pts </strong></li>
+</ul>
+</div>
+</div>
+
+  <div class="footer">
+    <span>écrit par Liam P.</span>
+    <span>4</span>
+  </div>
+</div>
+
+
+
+<!-- PAGE 5 -->
+<div class="page" id="page5">
+  <div class="title">
+    <h1>♟️ Newsletter de l'Échiquier Tournaisien</h1>
+    <p>Aout + Septembre 2026</p>
+  </div>
+     
+  <hr> 
+          
+     <div class="content">  
+     <div>
+    <h2>La Coupe et son inscription</h2>
+
+<p>La plus ancienne compétition du club revient dès ce mois de septembre pour sa 40e edition avec une adaptation au nouveau système de points mis en place cette année.</p>
+
+<p>Voici toutes les informations nécessaires pour comprendre son fonctionnement :</p>
+
+<p>Tout d'abord, on a maintenant les "32 joueurs" qui participeront pour cette edition de la coupe 2026.</p>
+
+<p>Ces 32 joueurs sont répartis en <strong>4 pots de 8 joueurs</strong>. Avant les quarts de finale, vous ne pourrez pas affronter un joueur appartenant au même pot que vous.</p>
+
+<p>Lors du premier tour, les joueurs des <strong>pots 1 et 2</strong> affronteront obligatoirement un joueur des <strong>pots 3 ou 4</strong>.</p>
+
+<p>Les joueurs éliminés dès le premier tour seront automatiquement reversés dans l'<strong>Open d'Automne</strong>, où ils auront une nouvelle chance de remporter un trophée personnalisé.</p>
+</div>
+<div>
+<p><strong>LA NOUVEAUTÉ :</strong> Les joueurs éliminés au deuxième tour continueront à jouer uniquement contre des joueurs éliminés au même stade de la compétition afin d'établir le classement final (places 9 à 16) et de remporter davantage de points PITCH. Le même principe sera appliqué aux joueurs éliminés en quarts de finale, en demi-finales, et ainsi de suite.</p>
+
+<p><strong>IMPORTANT :</strong> Le tirage au sort aura lieu le <strong>18 septembre</strong>. Vous devrez être inscrit au club et affilié à la FIDE <strong>au plus tard le 10 septembre</strong>, afin que votre affiliation puisse être prise en compte à temps. La Coupe étant une compétition homologuée FIDE, il sera impossible d'y participer sans affiliation.</p>
+
+<p>L'<strong>Open d'Automne</strong>, quant à lui, ne sera pas homologué FIDE, comme l'an dernier.</p>
+
+<p>Le tableau complet de la Coupe, avec l'ensemble de vos adversaires potentiels, sera publié le <strong>19 septembre</strong> sur le groupe WhatsApp du club, après le tirage au sort et le tournoi de blitz.</p>
+
+<p>Voici les 4 pots (Peut changer avant le 18 septembre) : </p>
+  </div>
+</div>
+
+<div style="display:flex; justify-content:space-between; align-items:center; gap:20px; margin-top: 30px;">
+    <div style="flex:1; text-align:center;">
+      <img src="C:\Users\Liam\OneDrive\Images\Screenshots\Screenshot 2026-09-07 161117.png"
+           style="width:100%; max-width:200px; height:500px; border-radius:4px;">
+
+</div>
+</div>
+<div class="footer">
+    <span>écrit par Liam P.</span>
+    <span>5</span>
+  </div>
+</div>
+
+<!-- PAGE 6 -->
+<div class="page" id="page6">
+  <div class="title">
+    <h1>♟️ Newsletter de l'Échiquier Tournaisien</h1>
+    <p>Aout + Septembre 2026</p>
+  </div>
+
+  <hr>
+
+  <div class="content">
+    <div>
+  <h2>Le règlement de la Coupe</h2>
+
+<p>La Coupe 2026 se déroulera du 25 septembre 2026 au 18 décembre 2026, avec une cadence de 75 minutes + 15 secondes par coup et 9 dates au calendrier pour 5 dates de Coupe. Voici son règlement :</p>
+
+<p><strong>1. Lois du jeu :</strong><br>
+Les parties sont régies par les Lois du jeu de la FIDE :<br>
+Chaque joueur joue à tour de rôle.<br>
+Si un joueur touche une pièce, il doit la jouer (règle « pièce touchée = pièce jouée »).<br>
+Une partie peut se terminer par :<br>
+• échec et mat<br>
+• abandon<br>
+• nulle (pat, répétition, règle des 50 coups, accord mutuel, etc.)<br>
+Les coups illégaux sont sanctionnés (ajout de temps à l’adversaire, voire perte de la partie après répétition).</p>
+
+<p><strong>2. Les retards :</strong><br>
+Le temps de tolérance est fixé à 30 minutes après le début de la ronde. Passé ce délai, tout joueur non présent sera déclaré forfait, sauf décision contraire de l’arbitre.</p>
+
+<p><strong>3. Horaires et présence :</strong><br>
+Les parties sont lancées à 20h30. Puisqu'il ne s'agit pas d'une compétition suisse, vous ne devez pas arriver plus tôt que l'heure de début de la partie. La pendule sera lancée à 20h30, sauf en cas de retard de l'organisateur.</p>
+
+<p><strong>4. Notation des coups :</strong><br>
+Obligatoire en parties classiques.<br>
+Les joueurs doivent noter chaque coup joué.</p>
+
+<p><strong>5. Arbitrage :</strong><br>
+Un arbitre officiel supervise la compétition (Julien) ou un assistant à l'arbitre (Liam). Il applique les règles et prend les décisions en cas de litige.</p>
+
+<p><strong>6. Système de tournoi :</strong><br>
+<strong>Système à élimination directe :</strong> Une défaite et votre parcours dans le tournoi est terminé. Attention : si vous perdez lors de la manche 1, vous serez reversé dans l'Open d'automne.</p>
+
+<p>Si vous perdez lors de la manche 2, vous affronterez des adversaires ayant également perdu lors de la manche 2 afin de déterminer votre classement final. Le même système est appliqué lors des manches suivantes.</p>
+
+<p>Cela peut vous permettre d'obtenir des points supplémentaires et ainsi vous aider dans la qualification pour le Championnat 2027.</p>
+
+<p><strong>7. Règles de comportement :</strong><br>
+Interdiction d’utiliser un téléphone ou tout appareil électronique.<br>
+<strong>Respect du silence et des autres joueurs.</strong><br>
+Toute aide extérieure est strictement interdite (triche = exclusion).<br>
+<strong>À l’issue de votre partie, les joueurs sont priés de ranger l’échiquier dans la salle d’analyse.</strong></p>
+</div>
+<div>
+<p><strong>8. Conditions de jeu :</strong><br>
+Les joueurs doivent jouer dans un environnement calme.<br>
+Il est interdit d’analyser une partie en cours dans la salle de jeu.<br>
+Les spectateurs doivent rester discrets.</p>
+
+<p><strong>9. Proposition de nulle :</strong><br>
+Une proposition de nulle ne peut pas être faite avant que le 20e coup ait été joué. Toute proposition de nulle effectuée avant le 20e coup n'est pas autorisée.</p>
+
+<p><strong>10. Parties reportées et dates limites :</strong><br>
+En cas d'absence, le joueur concerné doit prévenir son adversaire à l'avance et convenir avec lui d'une nouvelle date pour jouer la partie.</p>
+
+<p>La partie doit impérativement être jouée avant la date d'envoi des résultats à la FIDE correspondant à la manche concernée. Les deux joueurs sont responsables de trouver une date qui leur convient et de transmettre le résultat dans les délais.</p>
+
+<p>Les dates d'envoi des résultats à la FIDE sont les suivantes :</p>
+
+<p>
+• <strong>25 septembre 2026</strong><br>
+• <strong>16 octobre 2026</strong><br>
+• <strong>6 novembre 2026</strong><br>
+• <strong>27 novembre 2026</strong><br>
+• <strong>18 décembre 2026</strong>
+</p>
+
+<p>Une partie non jouée dans les délais pourra être considérée comme un forfait, sauf décision contraire de l'arbitre ou de l'organisateur.</p>
+
+<p><strong>11. Homologation FIDE :</strong><br>
+Pour qu’un tournoi soit officiel FIDE :</p>
+
+<p>
+• arbitre agréé FIDE<br>
+• cadence conforme<br>
+• enregistrement du tournoi<br>
+• respect des règles internationales
+</p>
+
+<p>Tout joueur souhaitant participer à une compétition FIDE doit être affilié à un club reconnu par sa fédération nationale et être en ordre de cotisation au moment de l’inscription.</p>
+
+<p>
+Voici les points PITCH selon les positions finales de la competition :
+</p>
+<ul>
+<li>1. 160 pts </li>
+<li>2. 128 pts</li>
+<li>3. 107 pts</li>
+<li>4. 91 pts</li>
+<li>5. 80 pts</li>
+<li>6. 71 pts</li>
+<li>7. 64 pts</li>
+<li>8. 58 pts</li>
+<li>9. 53 pts</li>
+<li>10. 49 pts</li>
+<li>11. 46 pts</li>
+<li>12. 43 pts</li>
+<li>13. 40 pts</li>
+<li>14. 38 pts</li>
+<li>15. 36 pts</li>
+<li>16. 34 pts</li>
+</ul>
+
+
+
+    </div>
+  </div>
+</div>
+  <div class="footer">
+    <span>écrit par Liam P.</span>
+    <span>6</span>
+  </div>
+</div>
+
+<!-- PAGE 7 -->
+<div class="page page-7" id="page7">
+  <div class="title">
+    <h1>♟️ Newsletter de l'Échiquier Tournaisien</h1>
+    <p>Aout + Septembre 2026</p>
+  </div>
+
+  <hr>
+
+  <div class="subtitle">
+        <h1>Les epreuves du Zodiac</h1>
+   </div>     
+     
+  <hr> 
+          
+     <div class="content">  
+     <div>
+
+<p>Depuis la dernière Newsletter, une nouvelle épreuve du Zodiac s'est déroulée : <strong>Checkless</strong> Une compétition qui n’a jamais été jouée auparavant officiellement au club.</p>
+
+<p>Malgré le faible nombre de participants de nouveau, l'amusement étaient de nouveau au rendez-vous.</p>
+
+<p>L'épreuve <strong>Checkless</strong> a été remportée par Michel (22 pts) mais empêché au dernier moment par Esteban pour le parfait 8/8 (24 pts).
+
+<p>Au classement général, on se rapproche de la fin de la competition avec deux grands favoris. Julien prend une avance considérable sur Liam et Esteban dans la course au titre de cette toute première édition, mais Michel n’est pas loin et peut encore gagner la compétition s’il reste régulier dans ses présences et ses performances.</p>
+
+<p>La prochaine épreuve sera l'<strong>Extinction</strong>. Le principe est simple : On remporte la partie si on arrive a eliminer une famille de piece de son adversaire. EXAMPLE : Si je prends les deux fous de mon adversaires, j'ai gagne. Cela est applique a 1 dame, 2 fou, 2 cavaliers, 2 tours ou les 8 pions. Gagner sur echec et mat est bien evidemment possible mais presque impossible selon le format.</p>
+
+<p>N'hésitez pas à venir tester cette nouveauté avec nous !</p>
+
+  </div>
+</div>
+<div style="display:flex; justify-content:space-between; align-items:center; gap:20px; margin-top: 30px;">
+    <div style="flex:1; text-align:center;">
+      <img src="C:\Users\Liam\OneDrive\Images\Screenshots\Screenshot 2026-09-08 140608.png"
+           style="width:100%; max-width:800px; height:500px; border-radius:4px;">
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>écrit par Liam P.</span>
+    <span>7</span>
+  </div>
+</div>
+
+<!-- PAGE 8 -->
+<div class="page page-7" id="page8">
+  <div class="title">
+    <h1>♟️ Newsletter de l'Échiquier Tournaisien</h1>
+    <p>Aout + Septembre 2026</p>
+  </div>
+
+  <hr>
+
+  
+<div class="content">
+    <div>
+<h2>Les classements pour le Blitz et le Mölkky du club</h2>
+
+<p>Vendredi 28 août a eu lieu notre tournoi d’échecs de Blitz à Chercq. Pour la première fois, celui-ci était <strong>non-FIDE</strong>, mais a quand même attiré un total de <strong>28 participants</strong>.</p>
+
+<p>On vous remercie tous d’avoir fait le déplacement jusqu’à Chercq. <strong>Ce week-end est primordial à la vie du club et c’est grâce à vous qu’on est encore là.</strong></p>
+
+<p>On aimerait aussi remercier <strong>Mat et Mot</strong> pour les prix ramenés pour ce Blitz amical. L’ambiance était au top et on a passé un excellent moment.</p>
+
+<p>À la fin du tournoi, c’est <strong>Vincent Brasseur</strong>, un joueur de Leuze, qui a complètement dominé le tournoi avec un <strong>10,5/11</strong>, suivi de <strong>Jonathan avec un 9/11</strong> et de <strong>Florian avec un 8/11</strong>.</p>
+
+<p>À retenir aussi, c’est la performance d’un de nos jeunes, <strong>Paul</strong>, qui a terminé le tournoi avec un <strong>6/11</strong> et a remporté le <strong>prix du meilleur jeune du tournoi</strong>. <strong>Félicitations à lui !</strong></p>
+
+<p>Cette édition se refera l’an prochain, cela est sûr et certain, et <strong>on espère vous voir nombreux !</strong></p>
+
+<p><strong>Le classement se trouve après le texte sur le samedi Mölkky.</strong></p>
+
+<p>-----------------------------------------------------------------------------------------------------------</p>
+</div>
+<div>
+<p>Voici le message d'Enguerran concernant le Mölkky :</p>
+
+<p><strong>Un immense merci aux nombreux joueurs et soutiens qui sont venus disputer ce Grand Chelem "Carlos Gallaix" des internationaux de Mölkky de Chercq 2026 !!</strong></p>
+
+<p><strong>Toutes nos félicitations aux 9 équipes qui remportent un prix :</strong></p> <ul> <li>🥇 <strong>Les vainqueurs, la Bande à Pichou : Christian et Mavyn</strong> qui ont lutté en demi-finales (2-1 contre Team Clovis) pour ensuite remporter une somptueuse finale !</li> <li>🥈 <strong>Les seconds, les Diables : Romain et Jimmy</strong> qui ont réalisé un tournoi incroyable et qui ont tenu la dragée haute en finale !</li> <li>🥉 <strong>Les troisièmes, Team Clovis, Ludo et Axel</strong>, qui ont gagné la petite finale alors qu'ils participaient tous deux pour la première fois au tournoi !</li> <li>🏅 <strong>Les quatrièmes, les Sisters : Nadine et Christine</strong>, fidèles habituées du tournoi, qui l'auront dominé de la tête et des épaules durant les 7 premières rondes !</li> <li>🎖️ <strong>Les cinquièmes, Team Daumus : Cyril et son acolyte et Erik</strong>, qui ont effectué une incroyable remontada !</li> </ul>
+
+<p>Sur les 5 premières équipes, <strong>1 appartient au clan "Enguerran" (1er), 2 au clan "Cyril" (3e et 5e) et 2 au clan "Djo" (2e et 4e).</strong> Ce dernier clan a également envoyé <strong>dix (10 !) équipes au tournoi, un record !!!</strong></p>
+
+<p><strong>Furent également récompensés :</strong></p> <ul> <li>🙀 <strong>Meilleure "première participation" : Colia, Corenthyn et Célia</strong> qui finissent à la 7e place ;</li> <li>🐣 <strong>Meilleur équipe jeunes : Martin et Hiram</strong>, de l'équipe éponyme, en 8e place ;</li> <li>🌹 <strong>Meilleur équipe féminine : ADN Gagnant, avec Cindy et Clara</strong>, en 14e place ;</li> <li>🤝 <strong>Le prix du Fair Play fut attribuée à l'équipe des Poilus, avec 3 votes !</strong></li> </ul>
+
+<p>Merci à notre sponsor <strong>Big Frites</strong> qui soutient l'événement pour la deuxième année d'affilée ; au comité de l'<strong>Echiquier tournaisien</strong> pour l'organisation ; aux nombreux bénévoles qui ont aide à la tenue de cet événement (jusqu'à ce matin pour le rangement et le nettoyage) ; aux nombreux joueurs et supporters ; à la fédération finlandaise internationale de Mölkky, à Son Excellence l'ambassadeur de Finlande de ne pas être venu ; à la météo impeccable franchement ne changez rien ; à toi lecteur qui lit ces lignes ; à ceux que j'ai oublié.</p>
+
+<p><strong>Merci, et à bientôt !</strong></p>
+<p>-----------------------------------------------------------------------------------------------------------</p>
+<p>Petit mot de ma part concernant le blind-test.</p>
+
+<p>C’était la <strong>première fois que j’en organisais un</strong> et honnêtement, c’était très chouette à faire. Malheureusement, le retard dans le planning de la journée a fait que je n’ai pas su tout faire, mais un truc est sûr : <strong>l’an prochain, le blind-test sera 10 fois mieux que cette année !</strong></p>
+
+<p>Merci beaucoup à <strong>Enguerran</strong> pour m’avoir aidé dans la correction et merci aux <strong>équipes d’être venues et d’avoir mis l’ambiance !</strong></p>
+
+<p>Sur ce, <strong>à la prochaine !</strong></p>
+</div>
+    </div>
+
+
+<div style="display:flex; justify-content:space-between; align-items:center; gap:20px; margin-top: 30px;">
+    <div style="flex:1; text-align:center;">
+      <img src="C:\Users\Liam\OneDrive\Images\Screenshots\Screenshot 2026-09-08 143321.png"
+           style="width:100%; max-width:350px; height:500px; border-radius:4px;">
+    </div>
+
+    <div style="flex:1; text-align:center;">
+      <img src="C:\Users\Liam\Downloads\Classement Mollky 2026.jpeg"
+           style="width:100%; max-width:350px; height:500px; border-radius:4px;">
+    </div>
+  </div>
+
+
+  <div class="footer">
+    <span>écrit par Liam P.</span>
+    <span>8</span>
+  </div>
+</div>
+
+<script>
+  function showPage(pageNumber) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+    document.getElementById('page' + pageNumber).classList.add('active');
+    document.querySelectorAll('.nav-btn')[pageNumber - 1].classList.add('active');
+  }
+  function checkPassword() {
+  const pass = document.getElementById("password").value;
+
+  if (pass === "Coupe") {
+    document.getElementById("login-screen").style.display = "none";
+    startLoading();
+  } else {
+    document.getElementById("error").innerText = "Mot de passe incorrect";
+  }
+}
+
+function startLoading() {
+  const loading = document.getElementById("loading-screen");
+  const progress = document.getElementById("progress");
+
+  loading.style.display = "flex";
+
+  let width = 0;
+  let interval = setInterval(() => {
+    width += 1.5;
+    progress.style.width = width + "%";
+
+    if (width >= 100) {
+      clearInterval(interval);
+      loading.style.display = "none";
+    }
+  }, 30);
+}
+</script>
+
+</body>
+</html>
